@@ -1,20 +1,20 @@
-int AA1=6;
-int AA2=5;
-//int BB1=6;
-int BB1=9;
-int CC1=10;
-int CC2=11;
+int A_1=7;
+
+
+int B_1=9;
+int C_1=10;
+
 
 int en1=3;
-int en2=7;
+int en2=4;
 int en3=8;
 float deay1_prev= 1800;
-int enable=2;
-int emfA=A2;
-int emfB=A3;
-int emfC=A4;
-int emf=A1;
-int fase=1;
+
+int bmfA=A2;
+int bmfB=A3;
+int bmfC=A4;
+int bmf=A1;
+int state=1;
 
 int IN=A5;
 int tiempo=4000;
@@ -24,27 +24,26 @@ int tiempo=4000;
 
 void setup() {
 Serial.begin(9600);
-  pinMode(AA1,OUTPUT);
-  pinMode(AA2,OUTPUT);
-  pinMode(BB1,OUTPUT);
+  pinMode(A_1,OUTPUT);
+ 
+  pinMode(B_1,OUTPUT);
   //pinMode(BB2,OUTPUT);
-  pinMode(CC1,OUTPUT);
-  pinMode(CC2,OUTPUT);
+  pinMode(C_1,OUTPUT);
+ 
 
   pinMode(en1,OUTPUT);
   pinMode(en2,OUTPUT);
   pinMode(en3,OUTPUT);
 
-  pinMode(enable,OUTPUT);
+  
 
   pinMode(IN,INPUT);
   //pinMode(A0,INPUT);
-  pinMode(emfA,INPUT);
-  pinMode(emfB,INPUT);
-  pinMode(emfC,INPUT);
+  pinMode(bmfA,INPUT);
+  pinMode(bmfB,INPUT);
+  pinMode(bmfC,INPUT);
 
   
-  digitalWrite(enable,HIGH);
   //previousMillis = micros();
   digitalWrite(en1,HIGH);
   digitalWrite(en2,HIGH);
@@ -57,21 +56,17 @@ void loop() {
 
     //int bmf = analogRead(A0);
       
-      // int emC = analogRead(A3);
-      // int emB = analogRead(A2);
-      // int emA = analogRead(A1);
-      // int sum = (emA+emB+emC)/3; 
-       //Serial.println(bmf);
+
 
   //Phase1 C-B
-  switch(fase){
+  switch(state){
     case 1:
       digitalWrite(en1,LOW);
       digitalWrite(en2,HIGH);
       digitalWrite(en3,HIGH);
      
-      digitalWrite(BB1,LOW);
-      digitalWrite(CC1,HIGH);
+      digitalWrite(B_1,LOW);
+      digitalWrite(C_1,HIGH);
       break;
 
   //Phase2 A-B
@@ -80,8 +75,8 @@ void loop() {
       digitalWrite(en2,HIGH);
       digitalWrite(en3,LOW);
 
-      digitalWrite(BB1,LOW);
-      digitalWrite(AA1,HIGH);
+      digitalWrite(B_1,LOW);
+      digitalWrite(A_1,HIGH);
       
       break;
 
@@ -91,9 +86,9 @@ void loop() {
       digitalWrite(en2,LOW);
       digitalWrite(en3,HIGH);
 
-      digitalWrite(BB1,LOW);    
-      digitalWrite(CC1,LOW);
-      digitalWrite(AA1,HIGH);
+      digitalWrite(B_1,LOW);    
+      digitalWrite(C_1,LOW);
+      digitalWrite(A_1,HIGH);
     break;   
   
   //Phase4 B-C
@@ -102,8 +97,8 @@ void loop() {
       digitalWrite(en2,HIGH);
       digitalWrite(en3,HIGH);
       
-      digitalWrite(CC1,LOW);
-      digitalWrite(BB1,HIGH);
+      digitalWrite(C_1,LOW);
+      digitalWrite(B_1,HIGH);
       
       break;
 
@@ -113,8 +108,8 @@ void loop() {
       digitalWrite(en2,HIGH);
       digitalWrite(en3,LOW);
 
-      digitalWrite(AA1,LOW);
-      digitalWrite(BB1,HIGH);
+      digitalWrite(A_1,LOW);
+      digitalWrite(B_1,HIGH);
       break;
 
   //Phase6 C-A
@@ -124,8 +119,8 @@ void loop() {
       digitalWrite(en2,LOW);
       digitalWrite(en3,HIGH);
 
-      digitalWrite(AA1,LOW);
-      digitalWrite(CC1,HIGH);
+      digitalWrite(A_1,LOW);
+      digitalWrite(C_1,HIGH);
     
   break;}
 
@@ -135,10 +130,10 @@ void loop() {
  tiempo=map(t,70,1100,1000,1);
 
   
-  if (fase<6){
-    fase=fase+1;}
+  if (state<6){
+    state=state+1;}
   else{
-    fase=1;
+    state=1;
   }
 
  
@@ -151,7 +146,7 @@ void loop() {
   }
   //Serial.println(deay1_prev);
   delayMicroseconds(deay1_prev);
-   delayMicroseconds(2400);
+   delayMicroseconds(600);
   
 }
 
